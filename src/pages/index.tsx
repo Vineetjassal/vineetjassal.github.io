@@ -72,7 +72,7 @@ export default function Home() {
         <Link href={"https://github.com/Vineetjassal/Netflix-Data-Analysis"} target="_blank">
         <ProjectPreview
           name="Netflix Data Analysis"
-          imageUrl="/Netflix.png"
+          imageUrl="/netflix.png"
         />
         </Link>
         <Link href={"#"} target="_blank">
