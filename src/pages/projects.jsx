@@ -1,13 +1,13 @@
-import Image from 'next/image'
-import Head from 'next/head'
+import { useState } from 'react';
+import Image from 'next/image';
+import Head from 'next/head';
 
-import { Card } from '@/components/Card'
-import { SimpleLayout } from '@/components/SimpleLayout'
-import avatar from '@/images/logos/notion.png'
-import twitter from '@/images/logos/twitter.png'
-import netflix from '@/images/logos/netflix.png'
-import spotify from '@/images/logos/spotify.png'
-import f1 from '@/images/logos/f1.png'
+import { Card } from '@/components/Card';
+import { SimpleLayout } from '@/components/SimpleLayout';
+import avatar from '@/images/logos/notion.png';
+import twitter from '@/images/logos/twitter.png';
+import netflix from '@/images/logos/netflix.png';
+import spotify from '@/images/logos/spotify.png';
 
 const projects = [
   {
@@ -16,6 +16,7 @@ const projects = [
       'Personalize Your Online Presence with our Notion-Inspired Avatar Maker. Customize Avatars to Represent Your Digital Identity in Style!',
     link: { href: 'https://avatartion-omega.vercel.app/', label: 'avatartion.vercel.app' },
     logo: avatar,
+    category: 'Web Development',
   },
   {
     name: 'Plitter (Twitter Clone)',
@@ -23,13 +24,7 @@ const projects = [
       'Share Your Thoughts, Follow Your Interests, and Stay Connected with our Twitter-inspired Social Network. Start Tweeting Today!',
     link: { href: 'https://plitterclone.vercel.app/', label: 'plitterclone.vercel.app' },
     logo: twitter,
-  },
-  {
-    name: 'Formula1 Racing Data Analysis',
-    description:
-      'Experience the Thrill of Formula 1 Racing through Data Analysis. Gain a Competitive Edge by Analyzing Driver Stats, Race Results, and Team Performance!',
-    link: { href: 'https://github.com/Vineetjassal/Formula1-Data-Analysis', label: 'Formula1-Data-Analysis' },
-    logo: f1,
+    category: 'Web Development',
   },
   {
     name: 'Netflix Data Analysis',
@@ -37,6 +32,7 @@ const projects = [
       'Dive into Insights and Trends with our Netflix Data Analysis Tool. Unlock the Secrets of Streaming Patterns and Viewer Preferences!',
     link: { href: 'https://github.com/Vineetjassal/Netflix-Data-Analysis', label: 'Netflix-Data-Analysis' },
     logo: netflix,
+    category: 'Data Science',
   },
   {
     name: 'Spotify Data Analysis',
@@ -44,8 +40,11 @@ const projects = [
       'Discover Musical Patterns and Trends with our Spotify Data Analysis Tool. Unveil Insights into Listener Preferences and Music Streaming Behavior!',
     link: { href: 'https://github.com/Vineetjassal/Spotify-Data-Analysis', label: 'Spotify-Data-Analysis' },
     logo: spotify,
+    category: 'Data Science',
   },
-]
+];
+
+const categories = ["All", "Web Development", "Data Science", "Open Source"];
 
 function LinkIcon(props) {
   return (
@@ -55,10 +54,16 @@ function LinkIcon(props) {
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }
 
 export default function Projects() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredProjects = selectedCategory === "All"
+    ? projects
+    : projects.filter(project => project.category === selectedCategory);
+
   return (
     <>
       <Head>
@@ -72,17 +77,28 @@ export default function Projects() {
         title="Things I’ve made trying to put my dent in the universe."
         intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
       >
+        <div className="mb-8 flex gap-x-4">
+          {categories.map(category => (
+            <button
+              key={category}
+              className={`text-md font-medium px-4 py-1 rounded-2xl mb-6 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-white transition dark:hover:text-black ${selectedCategory === category ? 'bg-gray-200 dark:bg-white' : 'bg-transparent'}`}
+              onClick={() => setSelectedCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
         <ul
           role="list"
           className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {projects.map((project) => (
-            <Card as="li" key={project.name}>
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+          {filteredProjects.map((project) => (
+            <Card as="li" key={project.name} className="border border-gray-200 dark:border-white rounded-2xl overflow-hidden cursor-pointer p-4">
+              <div>
                 <Image
                   src={project.logo}
                   alt=""
-                  className="h-8 w-8"
+                  className="h-full w-full rounded-xl"
                   unoptimized
                 />
               </div>
@@ -99,5 +115,5 @@ export default function Projects() {
         </ul>
       </SimpleLayout>
     </>
-  )
+  );
 }
