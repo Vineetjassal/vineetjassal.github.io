@@ -26,25 +26,9 @@ const projects = [
     logo: twitter,
     category: 'Web Development',
   },
-  {
-    name: 'Netflix Data Analysis',
-    description:
-      'Dive into Insights and Trends with our Netflix Data Analysis Tool. Unlock the Secrets of Streaming Patterns and Viewer Preferences!',
-    link: { href: 'https://github.com/Vineetjassal/Netflix-Data-Analysis', label: 'Netflix-Data-Analysis' },
-    logo: netflix,
-    category: 'Data Science',
-  },
-  {
-    name: 'Spotify Data Analysis',
-    description:
-      'Discover Musical Patterns and Trends with our Spotify Data Analysis Tool. Unveil Insights into Listener Preferences and Music Streaming Behavior!',
-    link: { href: 'https://github.com/Vineetjassal/Spotify-Data-Analysis', label: 'Spotify-Data-Analysis' },
-    logo: spotify,
-    category: 'Data Science',
-  },
 ];
 
-const categories = ["All", "Web Development", "Data Science", "Open Source"];
+const categories = ["All", "Web Development", "Open Source"];
 
 function LinkIcon(props) {
   return (
